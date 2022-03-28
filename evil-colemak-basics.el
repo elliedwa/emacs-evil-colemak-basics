@@ -69,46 +69,73 @@ rotated; see evil-colemak-basics-rotate-t-f-j."
   :type '(choice (const :tag "default" nil)
                  (const :tag "evil-snipe" evil-snipe)))
 
+(defcustom evil-colemak-basics-tarmak nil
+  "Whether the current layout is a transitional Tarmak layout.
+
+All changes in the evil-colemak-basics keymap are contained either
+in the first step or not realized until you are using standard
+Colemak. Thus this variable can be a boolean that disables some of
+the changes."
+  :group 'evil-colemak-basics
+  :type 'boolean
+
+
 (defun evil-colemak-basics--make-keymap ()
   "Initialise the keymap based on the current configuration."
   (let ((keymap (make-sparse-keymap)))
+
+    ;;; Full colemacs ;;;
+    ;; mnv
     (evil-define-key '(motion normal visual) keymap
-      "n" 'evil-next-line
-      "gn" 'evil-next-visual-line
-      "e" 'evil-previous-line
-      "E" 'evil-lookup
-      "ge" 'evil-previous-visual-line
-      "i" 'evil-forward-char
-      "I" 'evil-window-bottom
-      "zi" 'evil-scroll-column-right
-      "zI" 'evil-scroll-right
-      "j" 'evil-forward-word-end
-      "J" 'evil-forward-WORD-end
-      "gj" 'evil-backward-word-end
-      "gJ" 'evil-backward-WORD-end
-      "k" (if (eq evil-search-module 'evil-search) 'evil-ex-search-next 'evil-search-next)
-      "K" (if (eq evil-search-module 'evil-search) 'evil-ex-search-previous 'evil-search-previous)
-      "gk" 'evil-next-match
-      "gK" 'evil-previous-match)
+      "n" 'evil-next-line ;; 1E
+      "gn" 'evil-next-visual-line ;; 1E (just the 'n')
+      "e" 'evil-previous-line ;; 1E
+      "E" 'evil-lookup ;; 1E
+      "ge" 'evil-previous-visual-line ;; 1E
+      "j" 'evil-forward-word-end ;; Follow 'j' around
+      "J" 'evil-forward-WORD-end ;; Follow 'j' around
+      "gj" 'evil-backward-word-end ;; ^^^
+      "gJ" 'evil-backward-WORD-end ;; ^^^
+      "k" (if (eq evil-search-module 'evil-search) 'evil-ex-search-next 'evil-search-next) ;; 1E
+      "K" (if (eq evil-search-module 'evil-search) 'evil-ex-search-previous 'evil-search-previous) ;; 1E
+      "gk" 'evil-next-match ;; 1E
+      "gK" 'evil-previous-match) ;; 1E
+    ;; nv
     (evil-define-key '(normal visual) keymap
-      "N" 'evil-join
-      "gN" 'evil-join-whitespace
-      "gl" 'evil-downcase
-      "gL" 'evil-upcase)
+      "N" 'evil-join ;; 1E
+      "gN" 'evil-join-whitespace) ;; 1E
+
+    (if evil-colemak-basics-tarmak nil
+    ;; mnv
+    (evil-define-key '(motion normal visual) keymap
+      "i" 'evil-forward-char ;; 5Colemak
+      "I" 'evil-window-bottom ;; 5Colemak
+      "zi" 'evil-scroll-column-right ;; 5Colemak
+      "zI" 'evil-scroll-right) ;; 5Colemak
+    ;; nv
+    (evil-define-key '(normal visual) keymap
+      "gl" 'evil-downcase ;; 5Colemak
+      "gL" 'evil-upcase) ;; 5Colemak
+    ;; n
     (evil-define-key 'normal keymap
-      "l" 'evil-undo
-      "u" 'evil-insert
-      "U" 'evil-insert-line
-      "gu" 'evil-insert-resume
-      "gU" 'evil-insert-0-line)
+      "l" 'evil-undo ;; 5Colemak
+      "u" 'evil-insert ;; 5Colemak
+      "U" 'evil-insert-line ;; 5Colemak
+      "gu" 'evil-insert-resume ;; 5Colemak
+      "gU" 'evil-insert-0-line) ;; 5Colemak
+    ;; v
     (evil-define-key 'visual keymap
-      "l" 'evil-downcase
-      "L" 'evil-upcase
-      "U" 'evil-insert)
+      "l" 'evil-downcase ;; 5Colemak
+      "L" 'evil-upcase ;; 5Colemak
+      "U" 'evil-insert) ;; 5Colemak
+    ;; vo
     (evil-define-key '(visual operator) keymap
-      "u" evil-inner-text-objects-map)
+      "u" evil-inner-text-objects-map) ;; 5Colemak
+    ;; o
     (evil-define-key 'operator keymap
-      "i" 'evil-forward-char)
+      "i" 'evil-forward-char) ;; 5Colemak
+
+    ;; rotate
     (when evil-colemak-basics-rotate-t-f-j
       (evil-define-key '(motion normal visual) keymap
         "f" 'evil-forward-word-end
@@ -124,6 +151,7 @@ rotated; see evil-colemak-basics-rotate-t-f-j."
         (evil-define-key 'normal keymap
           "gj" 'tab-bar-switch-to-next-tab
           "gJ" 'tab-bar-switch-to-prev-tab))
+      ;; char jump commands
       (cond
        ((eq evil-colemak-basics-char-jump-commands nil)
         (evil-define-key '(motion normal visual) keymap
@@ -141,12 +169,13 @@ rotated; see evil-colemak-basics-rotate-t-f-j."
           "j" 'evil-snipe-j
           "J" 'evil-snipe-J))
        (t (user-error "Invalid evil-colemak-basics-char-jump-commands configuration"))))
+    ;; mod-dh
     (when (eq evil-colemak-basics-layout-mod 'mod-dh)
       (evil-define-key '(motion normal visual) keymap
         "m" 'evil-backward-char)
       (evil-define-key '(normal visual) keymap
         "h" 'evil-set-marker))
-    keymap))
+    keymap)))
 
 (defvar evil-colemak-basics-keymap
   (evil-colemak-basics--make-keymap)
