@@ -77,7 +77,7 @@ in the first step or not realized until you are using standard
 Colemak. Thus this variable can be a boolean that disables some of
 the changes."
   :group 'evil-colemak-basics
-  :type 'boolean
+  :type 'boolean)
 
 
 (defun evil-colemak-basics--make-keymap ()
