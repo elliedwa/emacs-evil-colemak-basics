@@ -106,76 +106,76 @@ the changes."
       "gN" 'evil-join-whitespace) ;; 1E
 
     (if evil-colemak-basics-tarmak nil
-    ;; mnv
-    (evil-define-key '(motion normal visual) keymap
-      "i" 'evil-forward-char ;; 5Colemak
-      "I" 'evil-window-bottom ;; 5Colemak
-      "zi" 'evil-scroll-column-right ;; 5Colemak
-      "zI" 'evil-scroll-right) ;; 5Colemak
-    ;; nv
-    (evil-define-key '(normal visual) keymap
-      "gl" 'evil-downcase ;; 5Colemak
-      "gL" 'evil-upcase) ;; 5Colemak
-    ;; n
-    (evil-define-key 'normal keymap
-      "l" 'evil-undo ;; 5Colemak
-      "u" 'evil-insert ;; 5Colemak
-      "U" 'evil-insert-line ;; 5Colemak
-      "gu" 'evil-insert-resume ;; 5Colemak
-      "gU" 'evil-insert-0-line) ;; 5Colemak
-    ;; v
-    (evil-define-key 'visual keymap
-      "l" 'evil-downcase ;; 5Colemak
-      "L" 'evil-upcase ;; 5Colemak
-      "U" 'evil-insert) ;; 5Colemak
-    ;; vo
-    (evil-define-key '(visual operator) keymap
-      "u" evil-inner-text-objects-map) ;; 5Colemak
-    ;; o
-    (evil-define-key 'operator keymap
-      "i" 'evil-forward-char) ;; 5Colemak
-
-    ;; rotate
-    (when evil-colemak-basics-rotate-t-f-j
+      ;; mnv
       (evil-define-key '(motion normal visual) keymap
-        "f" 'evil-forward-word-end
-        "F" 'evil-forward-WORD-end
-        "gf" 'evil-backward-word-end
-        "gF" 'evil-backward-WORD-end)
-      (evil-define-key 'normal keymap
-        "gt" 'find-file-at-point
-        "gT" 'evil-find-file-at-point-with-line)
-      (evil-define-key 'visual keymap
-        "gt" 'evil-find-file-at-point-visual)
-      (when (featurep 'tab-bar)  ; Evil also checks this; see evil-maps.el
-        (evil-define-key 'normal keymap
-          "gj" 'tab-bar-switch-to-next-tab
-          "gJ" 'tab-bar-switch-to-prev-tab))
-      ;; char jump commands
-      (cond
-       ((eq evil-colemak-basics-char-jump-commands nil)
-        (evil-define-key '(motion normal visual) keymap
-          "t" 'evil-find-char
-          "T" 'evil-find-char-backward
-          "j" 'evil-find-char-to
-          "J" 'evil-find-char-to-backward))
-       ((eq evil-colemak-basics-char-jump-commands 'evil-snipe)
-        ;; XXX https://github.com/hlissner/evil-snipe/issues/46
-        (evil-snipe-def 1 inclusive "t" "T")
-        (evil-snipe-def 1 exclusive "j" "J")
-        (evil-define-key '(motion normal visual) keymap
-          "t" 'evil-snipe-t
-          "T" 'evil-snipe-T
-          "j" 'evil-snipe-j
-          "J" 'evil-snipe-J))
-       (t (user-error "Invalid evil-colemak-basics-char-jump-commands configuration"))))
-    ;; mod-dh
-    (when (eq evil-colemak-basics-layout-mod 'mod-dh)
-      (evil-define-key '(motion normal visual) keymap
-        "m" 'evil-backward-char)
+	"i" 'evil-forward-char ;; 5Colemak
+	"I" 'evil-window-bottom ;; 5Colemak
+	"zi" 'evil-scroll-column-right ;; 5Colemak
+	"zI" 'evil-scroll-right) ;; 5Colemak
+      ;; nv
       (evil-define-key '(normal visual) keymap
-        "h" 'evil-set-marker))
-    keymap)))
+	"gl" 'evil-downcase ;; 5Colemak
+	"gL" 'evil-upcase) ;; 5Colemak
+      ;; n
+      (evil-define-key 'normal keymap
+	"l" 'evil-undo ;; 5Colemak
+	"u" 'evil-insert ;; 5Colemak
+	"U" 'evil-insert-line ;; 5Colemak
+	"gu" 'evil-insert-resume ;; 5Colemak
+	"gU" 'evil-insert-0-line) ;; 5Colemak
+      ;; v
+      (evil-define-key 'visual keymap
+	"l" 'evil-downcase ;; 5Colemak
+	"L" 'evil-upcase ;; 5Colemak
+	"U" 'evil-insert) ;; 5Colemak
+      ;; vo
+      (evil-define-key '(visual operator) keymap
+	"u" evil-inner-text-objects-map) ;; 5Colemak
+      ;; o
+      (evil-define-key 'operator keymap
+	"i" 'evil-forward-char) ;; 5Colemak
+
+      ;; rotate
+      (when evil-colemak-basics-rotate-t-f-j
+	(evil-define-key '(motion normal visual) keymap
+          "f" 'evil-forward-word-end
+          "F" 'evil-forward-WORD-end
+          "gf" 'evil-backward-word-end
+          "gF" 'evil-backward-WORD-end)
+	(evil-define-key 'normal keymap
+          "gt" 'find-file-at-point
+          "gT" 'evil-find-file-at-point-with-line)
+	(evil-define-key 'visual keymap
+          "gt" 'evil-find-file-at-point-visual)
+	(when (featurep 'tab-bar)  ; Evil also checks this; see evil-maps.el
+          (evil-define-key 'normal keymap
+            "gj" 'tab-bar-switch-to-next-tab
+            "gJ" 'tab-bar-switch-to-prev-tab))
+	;; char jump commands
+	(cond
+	 ((eq evil-colemak-basics-char-jump-commands nil)
+          (evil-define-key '(motion normal visual) keymap
+            "t" 'evil-find-char
+            "T" 'evil-find-char-backward
+            "j" 'evil-find-char-to
+            "J" 'evil-find-char-to-backward))
+	 ((eq evil-colemak-basics-char-jump-commands 'evil-snipe)
+          ;; XXX https://github.com/hlissner/evil-snipe/issues/46
+          (evil-snipe-def 1 inclusive "t" "T")
+          (evil-snipe-def 1 exclusive "j" "J")
+          (evil-define-key '(motion normal visual) keymap
+            "t" 'evil-snipe-t
+            "T" 'evil-snipe-T
+            "j" 'evil-snipe-j
+            "J" 'evil-snipe-J))
+	 (t (user-error "Invalid evil-colemak-basics-char-jump-commands configuration"))))
+      ;; mod-dh
+      (when (eq evil-colemak-basics-layout-mod 'mod-dh)
+	(evil-define-key '(motion normal visual) keymap
+          "m" 'evil-backward-char)
+	(evil-define-key '(normal visual) keymap
+          "h" 'evil-set-marker))
+      keymap)))
 
 (defvar evil-colemak-basics-keymap
   (evil-colemak-basics--make-keymap)
@@ -200,3 +200,4 @@ the changes."
 (provide 'evil-colemak-basics)
 
 ;;; evil-colemak-basics.el ends here
+
