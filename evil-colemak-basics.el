@@ -107,7 +107,7 @@ the changes."
 
     (if evil-colemak-basics-tarmak nil
       ;; mnv
-      (evil-define-key '(motion normal visual) keymap
+      ((evil-define-key '(motion normal visual) keymap
 	"i" 'evil-forward-char ;; 5Colemak
 	"I" 'evil-window-bottom ;; 5Colemak
 	"zi" 'evil-scroll-column-right ;; 5Colemak
@@ -175,7 +175,7 @@ the changes."
           "m" 'evil-backward-char)
 	(evil-define-key '(normal visual) keymap
           "h" 'evil-set-marker))
-      keymap)))
+      keymap))))
 
 (defvar evil-colemak-basics-keymap
   (evil-colemak-basics--make-keymap)
